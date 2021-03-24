@@ -1,0 +1,23 @@
+{
+  "name": "express-mongodb",
+  "version": "1.0.0",
+  "description": "Express and Mongodb Backend Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "yarn test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/katebry/express-mongodb.git"
+  },
+  "author": "Kate Bryan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/katebry/express-mongodb/issues"
+  },
+  "homepage": "https://github.com/katebry/express-mongodb#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongodb": "^3.6.5"
+  }
+}
