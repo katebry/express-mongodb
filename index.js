@@ -17,7 +17,7 @@ async function listDatabases(client){
 };
 
 async function main() {
-  const client = new MongoClient(MY_DB_PASSWORD);
+  const client = new MongoClient(MY_DB_PASSWORD, { useNewUrlParser: true, useUnifiedTopology: true });
 
   console.log('in the main function')
 
