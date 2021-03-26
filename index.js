@@ -24,6 +24,7 @@ async function main() {
   try {
     await client.connect();
     await listDatabases(client);
+    await findOneBookByName(client, "The Divine Comedy");
   } catch (e) {
     console.error(e);
   } finally {
@@ -31,7 +32,20 @@ async function main() {
   }
 }
 
+async function findOneBookByName(client, nameOfBook) {
+    const result = await client.db("Vue-Books").collection("Books").findOne({ title: nameOfBook });
+    if (result) {
+        console.log(`Found a book in the collection with the name '${nameOfBook}':`);
+        console.log(result);
+    } else {
+        console.log(`No listings found with the name '${nameOfBook}'`);
+    }
+}
+
 main().catch(console.error);
+
+// findOneBookByName()
+
 
 app.use("/api", apiRoutes);
 
