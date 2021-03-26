@@ -38,7 +38,7 @@ async function findOneBookByName(client, nameOfBook) {
         console.log(`Found a book in the collection with the name '${nameOfBook}':`);
         console.log(result);
     } else {
-        console.log(`No listings found with the name '${nameOfBook}'`);
+        console.log(`No books found with the name '${nameOfBook}'`);
     }
 }
 
