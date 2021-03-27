@@ -24,7 +24,9 @@ async function main() {
   try {
     await client.connect();
     await listDatabases(client);
-    await findOneBookByName(client, "The Divine Comedy");
+    // await findOneBookByName(client, "The Divine Comedy");
+    await findAllBooks(client)
+
   } catch (e) {
     console.error(e);
   } finally {
@@ -32,6 +34,7 @@ async function main() {
   }
 }
 
+// Search for individual book, GET request
 async function findOneBookByName(client, nameOfBook) {
     const result = await client.db("Vue-Books").collection("Books").findOne({ title: nameOfBook });
     if (result) {
@@ -42,10 +45,19 @@ async function findOneBookByName(client, nameOfBook) {
     }
 }
 
+async function findAllBooks(client) {
+    const result = await client.db("Vue-Books").collection("Books").find().toArray()
+    if (result) {
+      const bookTitles = result.map((book) => {
+        console.log(`These are the book titles, ${book.title}`)
+      })
+      return bookTitles
+    } else {
+        console.log(`No books found with the name '${result}'`);
+    }
+}
+
 main().catch(console.error);
-
-// findOneBookByName()
-
 
 app.use("/api", apiRoutes);
 
