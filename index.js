@@ -1,5 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv").config();
+const { MongoClient } = require("mongodb");
 const { listDatabases, findOneBookByName, findAllBooks } = require("./db/connections");
 
 const MY_DB_PASSWORD = process.env.MONOGO_PASSWORD;
@@ -7,9 +8,7 @@ const MY_PORT = process.env.PORT;
 
 const app = express();
 
-const { MongoClient } = require("mongodb");
-
-async function main() {
+async function dbConnect() {
   const client = new MongoClient(MY_DB_PASSWORD, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -27,7 +26,7 @@ async function main() {
   }
 }
 
-main().catch(console.error);
+dbConnect().catch(console.error);
 
 // TODO, move these back into the Router file
 app.get("/", function (req, res) {
