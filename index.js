@@ -1,6 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv").config();
-const { listDatabases } = require("./db/connections");
+const { listDatabases, findOneBookByName, findAllBooks } = require("./db/connections");
 
 const MY_DB_PASSWORD = process.env.MONOGO_PASSWORD;
 const MY_PORT = process.env.PORT;
@@ -15,50 +15,15 @@ async function main() {
     useUnifiedTopology: true,
   });
 
-  console.log("in the main function");
-
   try {
     await client.connect();
+    await listDatabases(client);
     await findOneBookByName(client, "The Divine Comedy");
     await findAllBooks(client);
-    await listDatabases(client);
   } catch (e) {
     console.error(e);
   } finally {
     await client.close();
-  }
-}
-
-// Search for individual book, GET request
-async function findOneBookByName(client, nameOfBook) {
-  const result = await client
-    .db("Vue-Books")
-    .collection("Books")
-    .findOne({ title: nameOfBook });
-  if (result) {
-    console.log(
-      `Found a book in the collection with the name '${nameOfBook}':`
-    );
-    console.log(result);
-  } else {
-    console.log(`No books found with the name '${nameOfBook}'`);
-  }
-}
-
-// Search for all books, GET request
-async function findAllBooks(client) {
-  const result = await client
-    .db("Vue-Books")
-    .collection("Books")
-    .find()
-    .toArray();
-  if (result) {
-    const bookTitles = result.map((book) => {
-      console.log(`These are the book titles, ${book.title}`);
-    });
-    return bookTitles;
-  } else {
-    console.log(`No books found with the name '${result}'`);
   }
 }
 
