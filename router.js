@@ -8,6 +8,7 @@ router.get('/', function(req, res) {
 });
 
 router.get('/books', function(req, res) {
+    console.log(req.body, ': /books request')
     res.json({
         status: '200',
         message: 'GET allBooks'
@@ -15,9 +16,18 @@ router.get('/books', function(req, res) {
 });
 
 router.get(`/books/:title`, function(req, res) {
+    console.log(req.body, ': /books/:title request')
     res.json({
         status: '200',
         message: 'GET bookByTitle'
+    });
+});
+
+router.post('/addBook', function(req, res) {
+    console.log(req.body, ': /addBook request')
+    res.json({
+        status: '201',
+        message: 'POST addBook'
     });
 });
 
