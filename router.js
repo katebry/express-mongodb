@@ -7,4 +7,18 @@ router.get('/', function(req, res) {
     });
 });
 
+router.get('/books', function(req, res) {
+    res.json({
+        status: '200',
+        message: 'GET allBooks'
+    });
+});
+
+router.get(`/books/:title`, function(req, res) {
+    res.json({
+        status: '200',
+        message: 'GET bookByTitle'
+    });
+});
+
 module.exports = router;
