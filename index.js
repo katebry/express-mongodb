@@ -1,4 +1,4 @@
-let express = require("express");
+const express = require("express");
 const dotenv = require("dotenv").config();
 
 const MY_PORT = process.env.PORT;
