@@ -1,5 +1,6 @@
-let express = require("express");
+const express = require("express");
 const dotenv = require("dotenv").config();
+const { listDatabases } = require("./db/connections");
 
 const MY_DB_PASSWORD = process.env.MONOGO_PASSWORD;
 const MY_PORT = process.env.PORT;
@@ -7,13 +8,6 @@ const MY_PORT = process.env.PORT;
 const app = express();
 
 const { MongoClient } = require("mongodb");
-
-async function listDatabases(client) {
-  databasesList = await client.db().admin().listDatabases();
-
-  console.log("Databases:");
-  databasesList.databases.forEach((db) => console.log(` - ${db.name}`));
-}
 
 async function main() {
   const client = new MongoClient(MY_DB_PASSWORD, {
@@ -25,9 +19,9 @@ async function main() {
 
   try {
     await client.connect();
-    await listDatabases(client);
     await findOneBookByName(client, "The Divine Comedy");
     await findAllBooks(client);
+    await listDatabases(client);
   } catch (e) {
     console.error(e);
   } finally {
