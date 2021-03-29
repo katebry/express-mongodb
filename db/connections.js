@@ -1,9 +1,31 @@
+const { MongoClient } = require("mongodb");
+const dotenv = require("dotenv").config();
+const MY_DB_PASSWORD = process.env.MONOGO_PASSWORD;
+
+// Lists the database stored in Mongodb Atlas
 async function listDatabases(client) {
   databasesList = await client.db().admin().listDatabases();
 
   console.log("Databases:");
   databasesList.databases.forEach((db) => console.log(` - ${db.name}`));
 }
+
+// Connects to the database
+async function dbConnect(request, params) {
+    const client = new MongoClient(MY_DB_PASSWORD, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+  
+    try {
+      await client.connect();
+      await request(client, params)
+    } catch (e) {
+      console.error(e);
+    } finally {
+      await client.close();
+    }
+  }
 
 // Search for individual book, GET request
 async function findOneBookByName(client, nameOfBook) {
@@ -38,4 +60,4 @@ async function findAllBooks(client) {
   }
 }
 
-module.exports = { listDatabases, findOneBookByName, findAllBooks };
+module.exports = { listDatabases, dbConnect, findOneBookByName, findAllBooks };
